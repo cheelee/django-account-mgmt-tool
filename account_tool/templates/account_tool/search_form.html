@@ -1,0 +1,21 @@
+{% extends "account_tool/base.html" %}
+
+{% block body %}
+<h1>Search Records</h1>
+
+<p>
+<a class="btn btn-info" href="{% url 'main' %}">Return to Main Screen</a>
+<a class="btn btn-info" href="{% url 'display_results' %}">Show All Entries</a>
+</p>
+
+<hr>
+
+<form method="get">
+  <table border="1">
+    {{ formset }}
+  </table>
+  <button type="submit">Submit</button>
+</form>
+
+<hr>
+{% endblock body %}

@@ -1,0 +1,18 @@
+{% extends "account_tool/base.html" %}
+{% block body %}
+<h1>Create New Entry</h1>
+
+<a class="btn btn-info" href="{% url 'secure' %}">Return to Records</a>
+
+<hr>
+
+<form method="post">
+  {% csrf_token %}
+  <table border="1">
+    {{ formset }}
+  </table>
+  <button type="submit">Submit</button>
+</form>
+
+<hr>
+{% endblock body %}

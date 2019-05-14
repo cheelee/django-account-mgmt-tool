@@ -1,0 +1,94 @@
+{% extends "account_tool/base.html" %}
+
+{% load static %}
+
+{% block header %}
+  {{ block.super }}
+  <title>Accounts Mgmt: Secure Records</title>
+{% endblock header %}
+{% block body %}
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <table style="width:100%">
+      <thead>
+      </thead>
+      <tbody>
+	<tr>
+	  <td width="20%" align="right"><img width="80%" src="{% static 'images/Logo_0512x.png' %}"></td>
+	  <td width="80%" align="center"><h1>Accounts Management Tool</h1></td>
+	</tr>
+	<tr>
+	  <td></td>
+	  <td align="center">Number of records in database: <b>{{ numRecs }}</b>.</td>
+	</tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<hr>
+
+<p>
+<a class="btn btn-info" href="{% url 'input_form' %}">Create New Entry</a>
+<a class="btn btn-danger" href="{% url 'logout' %}">Logout</a>
+</p>
+<form id="editRecForm" action="/update/" method="get">
+<input id="editField" type="hidden" name="record">
+</form>
+<hr>
+
+<!-- Nav tabs -->
+<ul id="tabList" class="nav nav-tabs">
+  <li class="nav-item">
+    <a id="resultsItem" class="nav-link active" data-toggle="tab" href="#resultsTab">Results</a>
+  </li>
+</ul>
+
+<!-- Tab panes -->
+<div id="tabContent" class="tab-content">
+  <div class="tab-pane container active" id="resultsTab">
+    {% if results %}
+    <table id="resultsTable" class="table table-striped table-bordered display" width="100%"></table>
+    {% else %}
+    <h1>No Records Found.</h1>
+    {% endif %}
+  </div>
+</div>
+
+<hr>
+{% endblock body %}
+
+{% load account_tool_tags %}
+
+{% block js %}
+  {{ block.super }}
+<script type="text/javascript">
+  {% if results %}
+  var resultsData = {{ results|safe }}
+  {% else %}
+  var resultsData = [];
+  {% endif %}
+  var columnSettings = [
+  {% for columnHeader in header %}
+    {
+    {% if visible|get_at_index:forloop.counter0  == 0 %}
+      visible: false,
+    {% endif %}
+    {% if forloop.counter0|index_in_set:urlFieldIndices %}
+      render: function(data, type, row, meta) {
+        if (type === 'display') {
+          data = '<a target="_blank" href="' + data + '">' + data + '</a>';
+        }
+        return data;
+      },
+    {% endif %}
+      name: "{{ columnHeader }}",
+      title: "{{ columnHeader }}", 
+    },
+  {% endfor %}
+  ];
+  var dataHeaders = {{ header|safe }};
+  var visibleFields = {{ visible|safe }};
+  var urlFieldIndices = {{ urlFieldIndices|safe }};
+</script>
+<script type="text/javascript" src="{% static 'js/main.js' %}"></script>  
+{% endblock js %}

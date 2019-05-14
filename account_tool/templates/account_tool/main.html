@@ -1,0 +1,36 @@
+{% extends "account_tool/base.html" %}
+
+{% load static %}
+
+{% block header %}
+  {{ block.super }}
+  <title>Accounts Mgmt: Welcome</title>
+{% endblock header %}
+{% block body %}
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <table style="width:100%">
+      <thead>
+      </thead>
+      <tbody>
+	<tr>
+	  <td width="20%" align="right"><img width="80%" src="{% static 'images/Logo_0512x.png' %}"></td>
+	  <td width="80%" align="center"><h1>Accounts Management Tool</h1></td>
+	</tr>
+	<tr>
+	  <td></td>
+	  <td align="center">Number of records in database: <b>{{ numRecs }}</b>.</td>
+	</tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<hr>
+
+<p>
+<a class="btn btn-info" href="{% url 'secure' %}">Access Records (Requires Login)</a>
+</p>
+<hr>
+
+<h1>Welcome! Please login to access records!</h1>
+{% endblock %}
