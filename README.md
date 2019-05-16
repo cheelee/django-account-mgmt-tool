@@ -37,6 +37,7 @@ Note that this prototype is a work-in-progress, and while it is functional there
     * downloads the necessary external packages;
     * creates the required Django app static environment. 
 3. <em>source env/bin/activate</em>
+4. <em>python manage.py migrate</em>
 4. <em>python manage.py runserver</em>
 5. Visit <em>127.0.0.1:8000</em> on any browser. The following welcome screen should show up with some test content available for use.
 ![Welcome Screen](docs/images/WelcomeScreen.png)

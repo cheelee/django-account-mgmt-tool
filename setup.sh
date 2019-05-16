@@ -10,6 +10,7 @@ cp db.sqlite3.test db.sqlite3
 
 # Download and set up app static environment
 export appRoot=$PWD/account_tool
+mkdir -p externals;
 cd externals;
 if [ ! -d bootstrap-4.3.1-dist ] ; then
     if [ ! -f bootstrap-4.3.1-dist.zip ] ; then
@@ -20,7 +21,9 @@ if [ ! -d bootstrap-4.3.1-dist ] ; then
     unzip bootstrap-4.3.1-dist.zip
 fi
 echo "Installing Bootstrap 4 javascript and CSS files."
+mkdir -p $appRoot/static/js
 cp bootstrap-4.3.1-dist/js/* $appRoot/static/js
+mkdir -p $appRoot/static/css
 cp bootstrap-4.3.1-dist/css/* $appRoot/static/css
 if [ ! -f jquery-3.3.1.min.js ] ; then
     wget https://code.jquery.com/jquery-3.3.1.min.js; 
