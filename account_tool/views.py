@@ -17,6 +17,7 @@ fieldToNameMap = {
     'account_id': 'User Id',
     'account_email': 'Email',
     'account_passwd': 'Secret',
+    'account_link': 'Auth Acct',
     };
 
 visibleFields = {
@@ -25,6 +26,16 @@ visibleFields = {
     'account_type',
     'account_id',
     'account_passwd',
+};
+
+printFields = {
+    'account_url',
+    'account_name',
+    'account_type',
+    'account_id',
+    'account_email',
+    'account_passwd',
+    'account_link',
 };
 
 urlFields = {
@@ -102,6 +113,7 @@ class SecureView(LoginRequiredMixin, TemplateView):
         context['results'] = resultsList;
         context['header'] = fieldsToNames(fields);
         context['visible'] = fieldsToVisible(fields);
+        context['toPrint'] = fieldsToNames(printFields);
         context['urlFieldIndices'] = getUrlFields(fields);
         return render(request, 'account_tool/secure.html', context);
 

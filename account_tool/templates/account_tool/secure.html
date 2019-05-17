@@ -29,6 +29,7 @@
 
 <p>
 <a class="btn btn-info" href="{% url 'input_form' %}">Create New Entry</a>
+<a id="printList" class="btn btn-info">Print List</a>
 <a class="btn btn-danger" href="{% url 'logout' %}">Logout</a>
 </p>
 <form id="editRecForm" action="/update/" method="get">
@@ -88,7 +89,10 @@
   ];
   var dataHeaders = {{ header|safe }};
   var visibleFields = {{ visible|safe }};
+  var printHeaderFields = {{ toPrint|safe }};
   var urlFieldIndices = {{ urlFieldIndices|safe }};
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.56/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.56/vfs_fonts.js"></script>
 <script type="text/javascript" src="{% static 'js/main.js' %}"></script>  
 {% endblock js %}

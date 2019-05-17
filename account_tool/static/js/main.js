@@ -23,11 +23,43 @@ $(document).ready(function() {
 	//		table.column(idx).visible(true);
 	//	    }
 	//	}
+	$('#printList').click(function() {
+		var widthDef = [];
+		for (var i=0; i<printHeaderFields.length; i++) {
+		    widthDef.push('auto');
+		}
+		var printContent = [];
+		printContent.push(printHeaderFields);
+		table.rows().every( function ( rowIdx, tableLoop, rowLoop ) {
+			var rowContent = [];
+			var data = this.data();
+			for (var i=0; i<printHeaderFields.length; i++) {
+			    var idx = table.column(printHeaderFields[i] + ':name').index();
+			    rowContent.push(data[idx]);
+			}
+			printContent.push(rowContent);
+		    } );
+		var docDefinition = {
+		    pageOrientation: 'landscape',
+		    content: [ 
+		{
+		    layout: 'lightHorizontalLines', // optional
+		    table: {
+			// headers are automatically repeated if the table spans over 
+			//   multiple pages
+			headerRows: 1,
+			widths: widthDef,
+			body: printContent,
+		    },
+		},
+			       ],
+		};
+		pdfMake.createPdf(docDefinition).open();
+	    });
 
-	$('#resultsTable tbody').on('click', 'tr', function() {
-		// *CWL* Attempts to allow a link-click without treating it as a row-click.
-		// The following does not work - cell requires a 'td' event.
-		// var colClickedIdx = table.cell(this).index().column;
+	$('#resultsTable tbody').on('dblclick', 'tr', function() {
+		// The reason we do not use a simple click is because it causes clicks on
+		//   URL links in the table to also trigger the edit option.
 		var data = table.row( this ).data();
 		var recIdIdx = table.column('id:name').index();
 		// var recUrlIdx = table.column('account_url:name').index();
